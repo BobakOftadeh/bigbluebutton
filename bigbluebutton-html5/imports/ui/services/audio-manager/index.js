@@ -5,6 +5,7 @@ import KurentoBridge from '/imports/api/audio/client/bridge/kurento';
 import Auth from '/imports/ui/services/auth';
 import VoiceUsers from '/imports/api/voice-users';
 import SIPBridge from '/imports/api/audio/client/bridge/sip';
+import logger from '/imports/startup/client/logger';
 import { notify } from '/imports/ui/services/notification';
 
 const MEDIA = Meteor.settings.public.media;
@@ -130,7 +131,7 @@ class AudioManager {
     this.isListenOnly = true;
     this.isEchoTest = false;
     // The kurento bridge isn't a full audio bridge yet, so we have to differ it
-    const bridge  = USE_KURENTO? this.listenOnlyBridge : this.bridge;
+    const bridge = USE_KURENTO ? this.listenOnlyBridge : this.bridge;
 
     const callOptions = {
       isListenOnly: true,
@@ -171,7 +172,7 @@ class AudioManager {
   exitAudio() {
     if (!this.isConnected) return Promise.resolve();
 
-    const bridge  = (USE_KURENTO && this.isListenOnly) ? this.listenOnlyBridge : this.bridge;
+    const bridge = (USE_KURENTO && this.isListenOnly) ? this.listenOnlyBridge : this.bridge;
 
     this.isHangingUp = true;
     this.isEchoTest = false;
@@ -262,7 +263,7 @@ class AudioManager {
         this.error = error;
         this.notify(this.messages.error[error] || this.messages.error.GENERIC_ERROR, true);
         makeCall('failed callStateCallback audio', response);
-        console.error('Audio Error:', error, bridgeError);
+        logger.error('Audio Error:', error, bridgeError);
         this.exitAudio();
         this.onAudioExit();
       }
