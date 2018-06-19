@@ -40,25 +40,3 @@ export function call(name, ...args) {
     throw e;
   });
 }
-
-export function log(type = 'error', message, ...args) {
-  const { credentials } = Auth;
-  const userInfo = window.navigator;
-  const clientInfo = {
-    language: userInfo.language,
-    userAgent: userInfo.userAgent,
-    screenSize: { width: window.screen.width, height: window.screen.height },
-    windowSize: { width: window.innerWidth, height: window.innerHeight },
-    bbbVersion: Meteor.settings.public.app.bbbServerVersion,
-    location: window.location.href,
-  };
-
-  const messageOrStack = message.stack || message.message || message.toString();
-  console.debug(`CLIENT LOG (${type.toUpperCase()}): `, messageOrStack, ...args);
-
-  Meteor.call('logClient', type, messageOrStack, {
-    clientInfo,
-    credentials,
-    ...args,
-  });
-}

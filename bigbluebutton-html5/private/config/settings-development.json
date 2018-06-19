@@ -335,6 +335,12 @@
           }
         ]
       }
+      
+    },
+    "log": {
+      "level":"debug",
+      "target": ["console","server"],
+      "url":""
     }
   },
 
@@ -368,7 +374,7 @@
 
 
     "log": {
-      "level": "info"
+      "level": "debug"
     }
   }
 }
