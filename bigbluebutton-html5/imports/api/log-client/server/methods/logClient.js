@@ -21,9 +21,9 @@ const logClient = function (type, log, ...args) {
   }
 
   if (typeof log === 'string' || log instanceof String) {
-    Logger.log(type, `CLIENT LOG: ${log}`, ...args);
+    Logger.log(type, `CLIENT LOG: ${log}`, logContents);
   } else {
-    Logger.log(type, `CLIENT LOG: ${JSON.stringify(log)}`, ...args);
+    Logger.log(type, `CLIENT LOG: ${JSON.stringify(log)}`, logContents);
   }
 };
 
