@@ -1,3 +1,4 @@
+import Auth from '/imports/ui/services/auth';
 import { Meteor } from 'meteor/meteor';
 import { createLogger, stdSerializers } from 'browser-bunyan';
 import { ConsoleFormattedStream } from '@browser-bunyan/console-formatted-stream';
@@ -17,7 +18,9 @@ const loggerStreams = []; // Stores the targets streams
 // Created a custom stream to log to the meteor server
 class MeteorStream {
   write(rec) {
-    Meteor.call('logClient', nameFromLevel[rec.level], rec.msg);
+    
+    const { credentials } = Auth;
+    Meteor.call('logClient', nameFromLevel[rec.level], rec.msg, { credentials });
   }
 }
 

@@ -17,6 +17,8 @@ Meteor.startup(() => {
     (stack.includes(message)) ? message = stack : message += `\n${stack}`;
     logger.error(message);
   });
-
+logger.error("asd");
   render(renderRoutes(), document.getElementById('app'));
+  logger.error("AAAAAAAAAAA");
 });
+

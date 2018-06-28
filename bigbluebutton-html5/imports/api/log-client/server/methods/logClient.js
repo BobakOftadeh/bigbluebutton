@@ -5,7 +5,8 @@ const logClient = function (type, log, ...args) {
   const SERVER_CONN_ID = this.connection.id;
   const User = Users.findOne({ connectionId: SERVER_CONN_ID });
   const logContents = { ...args };
-
+  console.log(!!User);
+  console.log(SERVER_CONN_ID);
   if (User) {
     const {
       meetingId, name, intId, extId, authToken,
