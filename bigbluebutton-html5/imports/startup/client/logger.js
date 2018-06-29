@@ -19,8 +19,9 @@ const loggerStreams = []; // Stores the targets streams
 class MeteorStream {
   write(rec) {
     
-    const { credentials } = Auth;
-    Meteor.call('logClient', nameFromLevel[rec.level], rec.msg, { credentials });
+    const { fullInfo } = Auth;
+  
+    Meteor.call('logClient', nameFromLevel[rec.level], rec.msg, fullInfo );
   }
 }
 
@@ -55,5 +56,6 @@ const logger = createLogger({
   serializers: stdSerializers,
   src: true,
 });
+
 
 export default logger;

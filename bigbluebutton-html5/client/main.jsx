@@ -1,5 +1,6 @@
 /* eslint no-unused-vars: 0 */
 import React from 'react';
+import Auth from '/imports/ui/services/auth';
 import { Meteor } from 'meteor/meteor';
 import { render } from 'react-dom';
 import renderRoutes from '/imports/startup/client/routes';
@@ -8,6 +9,9 @@ import { ConsoleFormattedStream } from '@browser-bunyan/console-formatted-stream
 import logger from '/imports/startup/client/logger';
 
 Meteor.startup(() => {
+  render(renderRoutes(), document.getElementById('app'));
+  console.log("AFTER");
+  
   // Logs all uncaught exceptions to the client logger
   window.addEventListener('error', (e) => {
     const stack = e.error.stack;
@@ -17,8 +21,8 @@ Meteor.startup(() => {
     (stack.includes(message)) ? message = stack : message += `\n${stack}`;
     logger.error(message);
   });
-logger.error("asd");
-  render(renderRoutes(), document.getElementById('app'));
-  logger.error("AAAAAAAAAAA");
+let a;
+a.b;
+  
 });
 
