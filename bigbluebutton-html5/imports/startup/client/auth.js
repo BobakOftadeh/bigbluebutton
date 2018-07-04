@@ -17,8 +17,7 @@ export function joinRouteHandler(nextState, replace, callback) {
     callback();
   }
   Auth.clearCredentials();
-  console.log(Auth.credentials);
-console.log("before enter fetch")
+
   // use enter api to get params for the client
   const url = `/bigbluebutton/api/enter?sessionToken=${sessionToken}`;
 
@@ -26,13 +25,11 @@ console.log("before enter fetch")
     .then(response => response.json())
     .then(({ response }) => {
       const {
-        returncode, meetingID, internalUserID, authToken, logoutUrl, customLogoURL, metadata, externUserID, fullname, confname
-        
-      } = response;
-      //log the language
-     
+        returncode, meetingID, internalUserID, authToken, logoutUrl, customLogoURL, metadata,
+        externUserID, fullname, confname,
 
-      console.log(response);
+      } = response;
+
       if (returncode === 'FAILED') {
         replace({ pathname: '/error/404' });
         callback();
@@ -62,11 +59,18 @@ console.log("before enter fetch")
         }) : {};
       SessionStorage.setItem(METADATA_KEY, metakeys);
 
-      Auth.set(meetingID, internalUserID, authToken, logoutUrl, sessionToken, fullname, externUserID, confname
+      Auth.set(
+        meetingID, internalUserID, authToken, logoutUrl,
+        sessionToken, fullname, externUserID, confname,
       );
 
       const path = deviceInfo.type().isPhone ? '/' : '/users';
-      const userInfo = window.navigator
+      const userInfo = window.navigator;
+
+      // Browser information is sent once on startup
+      // Sent here instead of Meteor.startup, as the
+      // user might not be validiated by then, thus user's data
+      // would not be sent with this information
       const clientInfo = {
         language: userInfo.language,
         userAgent: userInfo.userAgent,
@@ -75,12 +79,12 @@ console.log("before enter fetch")
         bbbVersion: Meteor.settings.public.app.bbbServerVersion,
         location: window.location.href,
       };
-      
+
       replace({ pathname: path });
-     
+
       callback();
-      console.log(clientInfo);
-      logger.error(JSON.stringify(clientInfo));
+
+      logger.info(JSON.stringify(clientInfo));
     });
 }
 
