@@ -76,7 +76,7 @@
       "chromeDefaultExtensionLink": "https://chrome.google.com/webstore/detail/bigbluebutton-screenshare/akgoaoikmbmhcopjgakkcepdgdgkjfbc",
       "chromeExtensionKey": "KEY",
       "chromeExtensionLink": "LINK",
-      "enableScreensharing": false,
+      "enableScreensharing": true,
       "enableVideo": false,
       "enableVideoStats": false,
       "enableListenOnly": false
