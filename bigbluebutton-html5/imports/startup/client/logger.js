@@ -16,7 +16,6 @@ import { nameFromLevel } from '@browser-bunyan/levels';
 // Call the logger by doing a function call with the level name, I.e, logger.warn('Hi on warn')
 
 const LOG_CONFIG = Meteor.settings.public.log || {};
-const loggerStreams = []; // Stores the targets streams
 const { fullInfo } = Auth;
 
 // create a custom stream that logs to an end-point
@@ -41,38 +40,45 @@ class MeteorStream {
 }
 
 // Checks to see which targets have been chosen
-for (i in LOG_CONFIG) {
-  switch (LOG_CONFIG[i].target) {
-    case 'external':
-      loggerStreams.unshift({
-        level: LOG_CONFIG[i].level,
-        stream: new ServerLoggerStream({
-          url: LOG_CONFIG[i].externalURL,
-          method: LOG_CONFIG[i].method,
-        }),
-      });
-      break;
+function generateLoggerStreams(LOG_CONFIG){
+  let loggerStreams = []; // Stores the targets streams
+  console.log(LOG_CONFIG);
+  loggerStreams = LOG_CONFIG.reduce(function(a, b, array, ra){
+    switch (b.target) {
+      case 'external':
+         a.unshift({
+          level: b.level,
+          stream: new ServerLoggerStream({
+            url: b.externalURL,
+            method: b.method,
+          }),
+        });
+        break;
 
-    case 'console':
-      loggerStreams.unshift({
-        level: LOG_CONFIG[i].level, // sends logs that are this level and higher
-        stream: new ConsoleFormattedStream(),
-      });
-      break;
-
-    case 'server':
-      loggerStreams.unshift({
-        level: LOG_CONFIG[i].level,
-        stream: new MeteorStream(),
-      });
-      break;
-  }
+      case 'console':
+        a.unshift({
+          level: b.level, // sends logs that are this level and higher
+          stream: new ConsoleFormattedStream(),
+        });
+        break;
+      case 'server':
+        a.unshift({
+          level: b.level,
+          stream: new MeteorStream(),
+        });
+        break;
+    }
+    console.log(a);
+  })
+  console.log(loggerStreams);
+  return loggerStreams;
 }
+
 
 // Creates the logger with the array of streams of the chosen targets
 const logger = createLogger({
   name: 'clientLogger',
-  streams: loggerStreams,
+  streams: generateLoggerStreams(LOG_CONFIG),
   serializers: stdSerializers,
   src: true,
 });

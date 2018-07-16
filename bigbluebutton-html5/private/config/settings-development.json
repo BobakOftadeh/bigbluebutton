@@ -344,7 +344,8 @@
       
     },
     "log": [
-      { "target": "server", "level": "info" }
+      { "target": "server", "level": "info" },
+      { "target": "console", "level": "info" }
     ]
   },
 
