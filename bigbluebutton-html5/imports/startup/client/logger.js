@@ -42,35 +42,31 @@ class MeteorStream {
 // Checks to see which targets have been chosen
 function generateLoggerStreams(LOG_CONFIG){
   let loggerStreams = []; // Stores the targets streams
-  console.log(LOG_CONFIG);
-  loggerStreams = LOG_CONFIG.reduce(function(a, b, array, ra){
-    switch (b.target) {
+  loggerStreams = LOG_CONFIG.map(function(currentValue){
+    switch (currentValue.target) {
       case 'external':
-         a.unshift({
-          level: b.level,
+      return {
+          level: currentValue.level, // sends logs that are this level and higher
           stream: new ServerLoggerStream({
-            url: b.externalURL,
-            method: b.method,
+            url: currentValue.externalURL,
+            method: currentValue.method,
           }),
-        });
-        break;
+        };
 
       case 'console':
-        a.unshift({
-          level: b.level, // sends logs that are this level and higher
+      return{
+          level: currentValue.level, 
           stream: new ConsoleFormattedStream(),
-        });
-        break;
+        };
+       
       case 'server':
-        a.unshift({
-          level: b.level,
+      return{
+          level: currentValue.level,
           stream: new MeteorStream(),
-        });
-        break;
+        };
+        
     }
-    console.log(a);
   })
-  console.log(loggerStreams);
   return loggerStreams;
 }
 
