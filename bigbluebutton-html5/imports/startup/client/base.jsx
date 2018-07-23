@@ -16,7 +16,7 @@ import logger from '/imports/startup/client/logger';
 import Users from '/imports/api/users';
 import Annotations from '/imports/api/annotations';
 import AnnotationsLocal from '/imports/ui/components/whiteboard/service';
-import IntlStartup from './intl';
+
 
 const propTypes = {
   error: PropTypes.object,
