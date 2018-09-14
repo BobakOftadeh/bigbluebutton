@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { styles } from '/imports/ui/components/user-list/user-list-content/styles';
 import UserListItem from './user-list-item/component';
+import UserOptions from './user-options/component';
 
 const propTypes = {
   users: PropTypes.arrayOf(Object).isRequired,
@@ -176,10 +177,15 @@ class UserParticipants extends Component {
       <div className={styles.participants}>
         {
           !compact ?
-            <h2 className={styles.smallTitle}>
-              {intl.formatMessage(intlMessages.usersTitle)}
-              &nbsp;({users.length})
-            </h2> : <hr className={styles.separator} />
+            <div>
+              <h2 className={styles.smallTitle}>
+                {intl.formatMessage(intlMessages.usersTitle)}
+                &nbsp;({users.length})
+                <UserOptions />
+            </h2>
+             
+            </div>
+            : <hr className={styles.separator} />
         }
         <div
           className={styles.scrollableList}
@@ -189,7 +195,7 @@ class UserParticipants extends Component {
         >
           <div className={styles.list}>
             <TransitionGroup ref={(ref) => { this.refScrollItems = ref; }}>
-              { this.getUsers() }
+              {this.getUsers()}
             </TransitionGroup>
             <div className={styles.footer} />
           </div>
