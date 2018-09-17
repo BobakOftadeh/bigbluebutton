@@ -19,9 +19,8 @@ import DropdownListSeparator from '/imports/ui/components/dropdown/list/separato
 import ShortcutHelpComponent from '/imports/ui/components/shortcut-help/component';
 
 
-
 const intlMessages = defineMessages({
-  optionsLabel:{
+  optionsLabel: {
     id: 'app.userList.userOptions.clearAllLabel',
     description: 'Clear all label',
   },
@@ -75,43 +74,42 @@ class UserOptions extends Component {
   }
 
   componentWillMount() {
-    const { intl, mountModal} = this.props;
+    const { intl, mountModal } = this.props;
     const { showHelpButton: helpButton } = Meteor.settings.public.app;
 
-    this.menuItems =_.compact( [
+    this.menuItems = _.compact([
       (<DropdownListItem
         key={_.uniqueId('list-item-')}
-        icon="settings"
+        icon="clear status"
         label={intl.formatMessage(intlMessages.clearAllLabel)}
         description={intl.formatMessage(intlMessages.clearAllDesc)}
         onClick={() => mountModal(<SettingsMenuContainer />)}
       />),
       (<DropdownListItem
         key={_.uniqueId('list-item-')}
-        icon="about"
+        icon="mute filled"
         label={intl.formatMessage(intlMessages.muteAllLabel)}
         description={intl.formatMessage(intlMessages.muteAllDesc)}
         onClick={() => mountModal(<AboutContainer />)}
       />),
       !helpButton ? null :
+        (<DropdownListItem
+          key={_.uniqueId('list-item-')}
+          icon="mute filled"
+          label={intl.formatMessage(intlMessages.muteAllExceptPresenterLabel)}
+          description={intl.formatMessage(intlMessages.muteAllExceptPresenterDesc)}
+          onClick={() => window.open('https://bigbluebutton.org/videos/')}
+        />),
       (<DropdownListItem
         key={_.uniqueId('list-item-')}
-        icon="help"
-        label={intl.formatMessage(intlMessages.muteAllExceptPresenterLabel)}
-        description={intl.formatMessage(intlMessages.muteAllExceptPresenterDesc)}
-        onClick={() => window.open('https://bigbluebutton.org/videos/')}
-      />),
-      (<DropdownListItem
-        key={_.uniqueId('list-item-')}
-        icon="shortcuts"
+        icon="lock"
         label={intl.formatMessage(intlMessages.lockViewersLabel)}
         description={intl.formatMessage(intlMessages.lockViewersDesc)}
         onClick={() => mountModal(<ShortcutHelpComponent />)}
-      />)
-    ])
+      />),
+    ]);
 
     // Removes fullscreen button if not on Android
-
   }
 
   componentWillReceiveProps(nextProps) {
@@ -146,11 +144,11 @@ class UserOptions extends Component {
         <DropdownTrigger tabIndex={0} accessKey={OPEN_OPTIONS_AK}>
           <Button
             label={intl.formatMessage(intlMessages.optionsLabel)}
-            icon="more"
-            ghost
+            icon="settings"
+
             circle
             hideLabel
-            
+
 
             // FIXME: Without onClick react proptypes keep warning
             // even after the DropdownTrigger inject an onClick handler
