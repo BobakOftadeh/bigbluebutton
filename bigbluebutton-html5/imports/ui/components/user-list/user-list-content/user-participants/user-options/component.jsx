@@ -145,17 +145,13 @@ class UserOptions extends Component {
           <Button
             label={intl.formatMessage(intlMessages.optionsLabel)}
             icon="settings"
-
+            size = 'sm'
             circle
             hideLabel
-
-
-            // FIXME: Without onClick react proptypes keep warning
-            // even after the DropdownTrigger inject an onClick handler
             onClick={() => null}
           />
         </DropdownTrigger>
-        <DropdownContent placement="bottom right">
+        <DropdownContent placement="left">
           <DropdownList>
             {
               this.menuItems

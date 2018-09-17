@@ -177,13 +177,13 @@ class UserParticipants extends Component {
       <div className={styles.participants}>
         {
           !compact ?
-            <div>
+            <div className={styles.container}>
               <h2 className={styles.smallTitle}>
                 {intl.formatMessage(intlMessages.usersTitle)}
                 &nbsp;({users.length})
-                <UserOptions />
-            </h2>
-             
+
+              </h2>
+              <UserOptions />
             </div>
             : <hr className={styles.separator} />
         }

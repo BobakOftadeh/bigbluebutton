@@ -9,6 +9,10 @@
   overflow: hidden;
 }
 
+.container{
+  display: flex;
+}
+
 .scrollableList {
   @include elementFocus($list-item-bg-hover);
   @include scrollbox-vertical($user-list-bg);
@@ -26,6 +30,8 @@
 
 .smallTitle {
   @extend .smallTitle;
+  flex: 1;
+  
 }
 
 .separator {
