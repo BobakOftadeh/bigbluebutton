@@ -17,7 +17,7 @@ import DropdownList from '/imports/ui/components/dropdown/list/component';
 import DropdownListItem from '/imports/ui/components/dropdown/list/item/component';
 import DropdownListSeparator from '/imports/ui/components/dropdown/list/separator/component';
 import ShortcutHelpComponent from '/imports/ui/components/shortcut-help/component';
-
+import Auth from '/imports/ui/services/auth';
 
 const intlMessages = defineMessages({
   optionsLabel: {
@@ -119,6 +119,69 @@ class UserOptions extends Component {
     }
   }
 
+  makeDropdownItem(key, label, onClick, icon = null, iconRight = null) {
+    return (
+      <DropdownListItem
+        {...{
+          key,
+          label,
+          onClick,
+          icon,
+          iconRight,
+        }}
+        className={key === this.props.getEmoji ? styles.emojiSelected : null}
+      />
+    );
+  }
+
+  getUsersActions() {
+    const {
+      intl,
+      currentUser,
+      user,
+      router,
+      isBreakoutRoom,
+      getAvailableActions,
+      handleEmojiChange,
+      getEmojiList,
+      setEmojiStatus,
+      assignPresenter,
+      removeUser,
+      toggleVoice,
+      changeRole,
+    } = this.props;
+
+    const actionPermissions = getAvailableActions(currentUser, user, router, isBreakoutRoom);
+    const actions = [];
+
+    const {
+      allowedToChatPrivately,
+      allowedToMuteAudio,
+      allowedToUnmuteAudio,
+      allowedToResetStatus,
+      allowedToRemove,
+      allowedToSetPresenter,
+      allowedToPromote,
+      allowedToDemote,
+      allowedToChangeStatus,
+    } = actionPermissions;
+
+    console.log(actionPermissions);
+
+    if (allowedToChangeStatus) {
+      actions.push(this.makeDropdownItem(
+        'setstatus',
+        intl.formatMessage(messages.statusTriggerLabel),
+        () => this.setState({ showNestedOptions: true, isActionsOpen: true }),
+        'user',
+        'right_arrow',
+      ));
+    }
+
+
+    return actions;
+  }
+
   onActionsShow() {
     this.setState({
       isSettingOpen: true,
@@ -132,8 +195,22 @@ class UserOptions extends Component {
   }
 
   render() {
-    const { intl } = this.props;
-
+    const {
+      intl,
+      currentUser,
+      user,
+      router,
+      isBreakoutRoom,
+      getAvailableActions,
+      handleEmojiChange,
+      getEmojiList,
+      setEmojiStatus,
+      assignPresenter,
+      removeUser,
+      toggleVoice,
+      changeRole,
+    } = this.props;
+    
     return (
       <Dropdown
       ref={(ref) => { this.dropdown = ref; }}  
@@ -149,6 +226,7 @@ class UserOptions extends Component {
             icon="settings"
             size = 'sm'
             circle
+            color = 'options'
             hideLabel
             className={styles.optionsButton}
             onClick={() => null}

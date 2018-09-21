@@ -168,9 +168,25 @@ class UserParticipants extends Component {
 
   render() {
     const {
-      users,
-      intl,
+      user,
       compact,
+      isBreakoutRoom,
+      currentUser,
+      meeting,
+      getAvailableActions,
+      normalizeEmojiName,
+      isMeetingLocked,
+      users,
+      changeRole,
+      assignPresenter,
+      setEmojiStatus,
+      removeUser,
+      toggleVoice,
+      getGroupChatPrivate, //// TODO check if this is used
+      handleEmojiChange, //// TODO add to props validation
+      getEmojiList,
+      getEmoji,
+      intl,
     } = this.props;
 
     return (
@@ -183,7 +199,20 @@ class UserParticipants extends Component {
                 &nbsp;({users.length})
 
               </h2>
-              <UserOptions />
+              <UserOptions  {...{
+              user,
+              currentUser,
+              isBreakoutRoom,
+              meeting,
+              getAvailableActions,
+              normalizeEmojiName,
+              isMeetingLocked,
+              assignPresenter,
+              removeUser,
+              toggleVoice,
+              changeRole,
+            }}
+            getScrollContainerRef={this.getScrollContainerRef}/>
             </div>
             : <hr className={styles.separator} />
         }

@@ -16,6 +16,10 @@ $btn-danger-color: $color-white;
 $btn-danger-bg: $color-danger;
 $btn-danger-border: $color-danger;
 
+$btn-options-color:  $color-white;
+$btn-options-bg:  $color-off-white;
+$btn-options-border: $color-gray-light;
+
 $btn-border-size: $border-size;
 $btn-border-radius: $border-radius;
 $btn-font-weight: 600;
@@ -227,6 +231,10 @@ $btn-jumbo-padding: $jumbo-padding-y $jumbo-padding-x;
   @include button-variant($btn-primary-color, $btn-primary-bg, $btn-primary-border);
 }
 
+.options {
+  @include button-variant($btn-options-color, $btn-options-bg, $btn-options-border);
+}
+
 .success {
   @include button-variant($btn-success-color, $btn-success-bg, $btn-success-border);
 }
@@ -252,6 +260,10 @@ $btn-jumbo-padding: $jumbo-padding-y $jumbo-padding-x;
 
   &.primary {
     @include button-ghost-variant($btn-primary-bg, $btn-primary-color);
+  }
+
+  &.options {
+    @include button-ghost-variant($btn-options-bg, $btn-options-color);  
   }
 
   &.success {

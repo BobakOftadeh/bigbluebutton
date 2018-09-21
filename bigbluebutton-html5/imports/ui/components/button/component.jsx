@@ -11,7 +11,7 @@ const SIZES = [
 ];
 
 const COLORS = [
-  'default', 'primary', 'danger', 'success',
+  'default', 'primary', 'danger', 'success','options'
 ];
 
 const propTypes = {
@@ -25,7 +25,7 @@ const propTypes = {
 
   /**
    * Defines the button color style
-   * @type {("default"|"primary"|"danger"|"success")}
+   * @type {("default"|"primary"|"danger"|"success"|"options")}
    * @defaultValue 'md'
    */
   color: PropTypes.oneOf(COLORS),

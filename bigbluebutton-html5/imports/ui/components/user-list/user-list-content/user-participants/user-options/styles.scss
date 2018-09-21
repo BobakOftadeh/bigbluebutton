@@ -9,17 +9,6 @@
 }
 
 .optionsButton{
-bottom: 2rem;
-background-color: none;
-  color: green;
-  > icon {
-          color: none !important;
-  }
-  &:hover,
-  &:focus {
-    box-shadow: none !important;
-    color: $color-primary !important;
-    
-    
- } 
+  display: block;
+  margin-right: .3rem;
 }
