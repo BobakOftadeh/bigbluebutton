@@ -174,7 +174,7 @@ class UserParticipants extends Component {
     } = this.props;
 
     return (
-      <div className={styles.participants}>
+      <div>
         {
           !compact ?
             <div className={styles.container}>

@@ -3,7 +3,7 @@ import { defineMessages, injectIntl } from 'react-intl';
 import cx from 'classnames';
 import _ from 'lodash';
 import { withModalMounter } from '/imports/ui/components/modal/service';
-
+import { styles } from './styles';
 
 import LogoutConfirmationContainer from '/imports/ui/components/logout-confirmation/container';
 import AboutContainer from '/imports/ui/components/about/container';
@@ -80,7 +80,7 @@ class UserOptions extends Component {
     this.menuItems = _.compact([
       (<DropdownListItem
         key={_.uniqueId('list-item-')}
-        icon="clear status"
+        icon="clear_status"
         label={intl.formatMessage(intlMessages.clearAllLabel)}
         description={intl.formatMessage(intlMessages.clearAllDesc)}
         onClick={() => mountModal(<SettingsMenuContainer />)}
@@ -136,10 +136,12 @@ class UserOptions extends Component {
 
     return (
       <Dropdown
-        autoFocus
+      ref={(ref) => { this.dropdown = ref; }}  
+      autoFocus={false}
         isOpen={this.state.isSettingOpen}
         onShow={this.onActionsShow}
         onHide={this.onActionsHide}
+        className={styles.dropdown}
       >
         <DropdownTrigger tabIndex={0} accessKey={OPEN_OPTIONS_AK}>
           <Button
@@ -148,10 +150,13 @@ class UserOptions extends Component {
             size = 'sm'
             circle
             hideLabel
+            className={styles.optionsButton}
             onClick={() => null}
           />
         </DropdownTrigger>
-        <DropdownContent placement="left">
+        <DropdownContent 
+        className={styles.dropdownContent}
+        placement="right top">
           <DropdownList>
             {
               this.menuItems
