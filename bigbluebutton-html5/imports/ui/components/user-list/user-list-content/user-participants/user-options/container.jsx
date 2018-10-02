@@ -9,6 +9,10 @@ export default class UserOptionsContainer extends Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      isMuted: false,
+    };
+
     this.muteAllUsers = this.muteAllUsers.bind(this);
     this.muteAllUsersExceptPresenter = this.muteAllUsersExceptPresenter.bind(this);
     this.handleLockView = this.handleLockView.bind(this);
@@ -17,10 +21,12 @@ export default class UserOptionsContainer extends Component {
 
   muteAllUsers() {
     logger.info('muteAllUsers function');
+    this.setState({ isMuted: true });
   }
 
   muteAllUsersExceptPresenter() {
     logger.info('muteAllUsersExceptPresenter function');
+    this.setState({ isMuted: true });
   }
 
   handleLockView() {
@@ -42,6 +48,7 @@ export default class UserOptionsContainer extends Component {
           toggleMuteAllUsersExceptPresenter={this.muteAllUsersExceptPresenter}
           toggleLockView={this.handleLockView}
           toggleStatus={this.handleClearStatus}
+          isMuted={this.state.isMuted}
         /> : null
     );
   }
