@@ -65,25 +65,22 @@ const intlMessages = defineMessages({
 class LockViewersComponent extends Component {
     constructor(props) {
         super(props);
+        const {
+            intl,
+            closeModal,
+          } = props;
+        this.closeModal = closeModal;
     }
     
-    asd() {
-
-        withModalMounter(withTracker(({ mountModal }) => {
-
-            console.log(mountModal);
-                     mountModal(null);
-              
-        }))
-    }
+   
     render() {
-        const { intl, mountModal, modalisOpen, closeModal } = this.props;
-        console.log(this.asd)
+        const { intl } = this.props;
+        console.log(this.closeModal)
         return (
             <ModalBase
                 overlayClassName={styles.overlay}
                 className={styles.modal}
-                onRequestClose={this.asd}
+                onRequestClose={this.closeModal}
             >
                 <div className={styles.btnContainer}>
                     <Button
@@ -93,7 +90,7 @@ class LockViewersComponent extends Component {
                         icon="close"
                         size="md"
                         hideLabel
-                        onClick={this.asd}
+                        onClick={this.closeModal}
                     />
                 </div>
                 <div className={styles.model}>
@@ -108,10 +105,10 @@ class LockViewersComponent extends Component {
                     </div>
                     <br /><br />
                     <div className={styles.form}>
-                        <div className={styles.row}>
+                        <header className={styles.row}>
                             <div className={styles.bold}>{intl.formatMessage(intlMessages.featuresLable)}</div>
                             <div className={styles.bold}>{intl.formatMessage(intlMessages.lockStatusLabel)}</div>
-                        </div>
+                        </header>
                         <div className={styles.row}>
                             <div className={styles.col} aria-hidden="true">
                                 <div className={styles.formElement}>

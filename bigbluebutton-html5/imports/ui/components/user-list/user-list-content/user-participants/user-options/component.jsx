@@ -8,7 +8,7 @@ import DropdownTrigger from '/imports/ui/components/dropdown/trigger/component';
 import DropdownContent from '/imports/ui/components/dropdown/content/component';
 import DropdownList from '/imports/ui/components/dropdown/list/component';
 import DropdownListItem from '/imports/ui/components/dropdown/list/item/component';
-import LockViewersComponent from '/imports/ui/components/lock-viewers/component';
+import LockViewersContainer from '/imports/ui/components/lock-viewers/container';
 import { styles } from './styles';
 
 const intlMessages = defineMessages({
@@ -101,7 +101,7 @@ class UserOptions extends Component {
         icon="lock"
         label={intl.formatMessage(intlMessages.lockViewersLabel)}
         description={intl.formatMessage(intlMessages.lockViewersDesc)}
-        onClick={() => mountModal(<LockViewersComponent />)}
+        onClick={() => mountModal(<LockViewersContainer />)}
       />),
     ]);
 
