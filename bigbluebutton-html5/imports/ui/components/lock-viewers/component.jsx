@@ -6,9 +6,11 @@ import _ from 'lodash';
 import { styles } from './styles';
 import Toggle from '/imports/ui/components/switch/component';
 import cx from 'classnames';
+import Auth from '/imports/ui/services/auth';
 import ModalBase from '/imports/ui/components/modal/base/component';
 import { withTracker } from 'meteor/react-meteor-data';
 import { withModalMounter } from '/imports/ui/components/modal/service';
+import Meetings from '/imports/api/meetings';
 
 const intlMessages = defineMessages({
     lockViewersTitle: {
@@ -75,7 +77,13 @@ class LockViewersComponent extends Component {
    
     render() {
         const { intl } = this.props;
-        console.log(this.closeModal)
+        const meetingId = Auth.meetingID;
+        const meeting = Meetings.findOne({ meetingId });
+        
+
+        const locked = meeting.lockSettingsProp.disablePrivChat;
+
+        
         return (
             <ModalBase
                 overlayClassName={styles.overlay}
@@ -121,7 +129,7 @@ class LockViewersComponent extends Component {
                                 <div className={cx(styles.formElement, styles.pullContentRight)}>
                                     <Toggle
                                         icons={false}
-                                        defaultChecked={false}
+                                        defaultChecked={this.locked}
                                         onChange={() => this.handleToggle('chatAudioAlerts')}
                                         ariaLabel={intl.formatMessage(intlMessages.webcamLabel)}
                                     />
