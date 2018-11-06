@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import logger from '/imports/startup/client/logger';
 import Auth from '/imports/ui/services/auth';
 import mapUser from '/imports/ui/services/user/mapUser';
@@ -6,6 +7,13 @@ import Users from '/imports/api/users/';
 import Meetings from '/imports/api/meetings';
 import UserOptions from './component';
 
+
+const propTypes = {
+  users: PropTypes.arrayOf(Object).isRequired,
+  muteAllUsers: PropTypes.func.isRequired,
+  muteAllExceptPresenter: PropTypes.func.isRequired,
+  setEmojiStatus: PropTypes.func.isRequired,
+};
 
 export default class UserOptionsContainer extends Component {
   constructor(props) {
@@ -38,7 +46,11 @@ export default class UserOptionsContainer extends Component {
   }
 
   handleLockView() {
+<<<<<<< HEAD
     
+=======
+    // Temporary lock method, will be changed in future PR
+>>>>>>> a97a1ece37855aa8763a591e22dacb389f6af271
     logger.info('handleLockView function');
   }
 
@@ -71,3 +83,5 @@ export default class UserOptionsContainer extends Component {
     );
   }
 }
+
+UserOptionsContainer.propTypes = propTypes;
