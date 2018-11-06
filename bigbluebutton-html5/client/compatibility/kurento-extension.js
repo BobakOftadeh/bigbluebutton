@@ -109,34 +109,37 @@ KurentoManager.prototype.exitScreenShare = function () {
     this.kurentoScreenshare.dispose();
     this.kurentoScreenshare = null;
   }
-
-  if (typeof this.kurentoVideo !== 'undefined' && this.kurentoVideo) {
-    this.exitVideo();
-  }
 };
 
 KurentoManager.prototype.exitVideo = function () {
-  if (typeof this.kurentoVideo !== 'undefined' && this.kurentoVideo) {
+  try {
+    if (typeof this.kurentoVideo !== 'undefined' && this.kurentoVideo) {
+      if(this.kurentoVideo.webRtcPeer) {
+        this.kurentoVideo.webRtcPeer.peerConnection.oniceconnectionstatechange = null;
+      }
 
-    if(this.kurentoVideo.webRtcPeer) {
-      this.kurentoVideo.webRtcPeer.peerConnection.oniceconnectionstatechange = null;
+      if (this.kurentoVideo.logger !== null) {
+        this.kurentoVideo.logger.info('  [exitScreenShare] Exiting screensharing viewing');
+      }
+
+      if (this.kurentoVideo.ws !== null) {
+        this.kurentoVideo.ws.onclose = function () {};
+        this.kurentoVideo.ws.close();
+      }
+
+      if (this.kurentoVideo.pingInterval) {
+        clearInterval(this.kurentoVideo.pingInterval);
+      }
+
+      this.kurentoVideo.dispose();
+      this.kurentoVideo = null;
     }
-
-    if (this.kurentoVideo.logger !== null) {
-      this.kurentoVideo.logger.info('  [exitScreenShare] Exiting screensharing viewing');
+  }
+  catch (err) {
+    if (this.kurentoVideo) {
+      this.kurentoVideo.dispose();
+      this.kurentoVideo = null;
     }
-
-    if (this.kurentoVideo.ws !== null) {
-      this.kurentoVideo.ws.onclose = function () {};
-      this.kurentoVideo.ws.close();
-    }
-
-    if (this.kurentoVideo.pingInterval) {
-      clearInterval(this.kurentoVideo.pingInterval);
-    }
-
-    this.kurentoVideo.dispose();
-    this.kurentoVideo = null;
   }
 };
 
@@ -474,12 +477,8 @@ Kurento.prototype.setAudio = function (tag) {
 
 Kurento.prototype.listenOnly = function () {
   var self = this;
-  const remoteVideo = document.getElementById(this.renderTag);
-  remoteVideo.muted = true;
   if (!this.webRtcPeer) {
     var options = {
-      audioStream: this.inputStream,
-      remoteVideo,
       onicecandidate : this.onListenOnlyIceCandidate.bind(this),
       mediaConstraints: {
         audio: true,
@@ -635,7 +634,7 @@ window.getScreenConstraints = function (sendSource, callback) {
         },
         (response) => {
           resolve(response);
-        },
+        }
       );
     });
   };
@@ -653,18 +652,18 @@ window.getScreenConstraints = function (sendSource, callback) {
   ];
 
   if (isElectron) {
-        var sourceId = ipcRenderer.sendSync('screen-chooseSync');
-        kurentoManager.kurentoScreenshare.extensionInstalled = true;
+    const sourceId = ipcRenderer.sendSync('screen-chooseSync');
+    kurentoManager.kurentoScreenshare.extensionInstalled = true;
 
-        // this statement sets gets 'sourceId" and sets "chromeMediaSourceId"
-        screenConstraints.video.chromeMediaSource = { exact: [sendSource] };
-        screenConstraints.video.chromeMediaSourceId = sourceId;
-        screenConstraints.optional = optionalConstraints;
+    // this statement sets gets 'sourceId" and sets "chromeMediaSourceId"
+    screenConstraints.video.chromeMediaSource = { exact: [sendSource] };
+    screenConstraints.video.chromeMediaSourceId = sourceId;
+    screenConstraints.optional = optionalConstraints;
 
-        console.log('getScreenConstraints for Chrome returns => ', screenConstraints);
-        return callback(null, screenConstraints);
+    console.log('getScreenConstraints for Chrome returns => ', screenConstraints);
+    return callback(null, screenConstraints);
   }
-  
+
   if (isChrome) {
     const extensionKey = kurentoManager.getChromeExtensionKey();
     getChromeScreenConstraints(extensionKey).then((constraints) => {
