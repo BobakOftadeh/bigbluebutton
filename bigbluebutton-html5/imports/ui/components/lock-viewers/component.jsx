@@ -59,7 +59,6 @@ const intlMessages = defineMessages({
   },
 });
 
-
 class LockViewersComponent extends Component {
   constructor(props) {
     super(props);
@@ -68,11 +67,11 @@ class LockViewersComponent extends Component {
       toggleLockSettings,
       toggleWebcamsOnlyForModerator,
     } = props;
+
     this.closeModal = closeModal;
     this.toggleLockSettings = toggleLockSettings;
     this.toggleWebcamsOnlyForModerator = toggleWebcamsOnlyForModerator;
   }
-
 
   render() {
     const { intl } = this.props;
@@ -97,11 +96,8 @@ class LockViewersComponent extends Component {
           />
         </div>
         <div className={styles.model}>
-          <div
-            className={styles.header}
-          >
+          <div className={styles.header}>
             <div className={styles.title}>{intl.formatMessage(intlMessages.lockViewersTitle)}</div>
-
           </div>
           <div className={styles.description}>
             {`${intl.formatMessage(intlMessages.lockViewersDescription)}`}
@@ -126,10 +122,10 @@ class LockViewersComponent extends Component {
                     icons={false}
                     defaultChecked={meeting.lockSettingsProp.disableCam}
                     onChange={() => {
-                                            meeting.lockSettingsProp.disableCam =
-                                            !meeting.lockSettingsProp.disableCam;
-                                            this.toggleLockSettings(meeting);
-                                        }}
+                      meeting.lockSettingsProp.disableCam =
+                        !meeting.lockSettingsProp.disableCam;
+                      this.toggleLockSettings(meeting);
+                    }}
                     ariaLabel={intl.formatMessage(intlMessages.webcamLabel)}
                   />
                 </div>
@@ -149,10 +145,10 @@ class LockViewersComponent extends Component {
                     icons={false}
                     defaultChecked={meeting.usersProp.webcamsOnlyForModerator}
                     onChange={() => {
-                                            meeting.usersProp.webcamsOnlyForModerator =
-                                            !meeting.usersProp.webcamsOnlyForModerator;
-                                            this.toggleWebcamsOnlyForModerator(meeting);
-                                        }}
+                      meeting.usersProp.webcamsOnlyForModerator =
+                        !meeting.usersProp.webcamsOnlyForModerator;
+                      this.toggleWebcamsOnlyForModerator(meeting);
+                    }}
                     ariaLabel={intl.formatMessage(intlMessages.otherViewersWebcamLabel)}
                   />
                 </div>
@@ -172,10 +168,10 @@ class LockViewersComponent extends Component {
                     icons={false}
                     defaultChecked={meeting.lockSettingsProp.disableMic}
                     onChange={() => {
-                                            meeting.lockSettingsProp.disableMic =
-                                            !meeting.lockSettingsProp.disableMic;
-                                            this.toggleLockSettings(meeting);
-                                        }}
+                      meeting.lockSettingsProp.disableMic =
+                        !meeting.lockSettingsProp.disableMic;
+                      this.toggleLockSettings(meeting);
+                    }}
                     ariaLabel={intl.formatMessage(intlMessages.microphoneLable)}
                   />
                 </div>
@@ -195,10 +191,10 @@ class LockViewersComponent extends Component {
                     icons={false}
                     defaultChecked={meeting.lockSettingsProp.disablePubChat}
                     onChange={() => {
-                                            meeting.lockSettingsProp.disablePubChat =
-                                            !meeting.lockSettingsProp.disablePubChat;
-                                            this.toggleLockSettings(meeting);
-                                        }}
+                      meeting.lockSettingsProp.disablePubChat =
+                        !meeting.lockSettingsProp.disablePubChat;
+                      this.toggleLockSettings(meeting);
+                    }}
                     ariaLabel={intl.formatMessage(intlMessages.publicChatLabel)}
                   />
                 </div>
@@ -218,10 +214,10 @@ class LockViewersComponent extends Component {
                     icons={false}
                     defaultChecked={meeting.lockSettingsProp.disablePrivChat}
                     onChange={() => {
-                                            meeting.lockSettingsProp.disablePrivChat =
-                                            !meeting.lockSettingsProp.disablePrivChat;
-                                            this.toggleLockSettings(meeting);
-                                        }}
+                      meeting.lockSettingsProp.disablePrivChat =
+                        !meeting.lockSettingsProp.disablePrivChat;
+                      this.toggleLockSettings(meeting);
+                    }}
                     ariaLabel={intl.formatMessage(intlMessages.privateChatLable)}
                   />
                 </div>
@@ -241,10 +237,10 @@ class LockViewersComponent extends Component {
                     icons={false}
                     defaultChecked={meeting.lockSettingsProp.lockedLayout}
                     onChange={() => {
-                                            meeting.lockSettingsProp.lockedLayout =
-                                            !meeting.lockSettingsProp.lockedLayout;
-                                            this.toggleLockSettings(meeting);
-                                        }}
+                      meeting.lockSettingsProp.lockedLayout =
+                        !meeting.lockSettingsProp.lockedLayout;
+                      this.toggleLockSettings(meeting);
+                    }}
                     ariaLabel={intl.formatMessage(intlMessages.layoutLable)}
                   />
                 </div>
