@@ -24,7 +24,10 @@
     margin: 3rem;
     margin-top:0.5rem;
 }
-
+.subHeader{
+  color: var(--color-gray-label);
+  font-size: 0.9rem;
+}
 .modal {
     @extend .modal;
     padding: 1.5rem;
@@ -43,7 +46,7 @@
   flex-flow: row;
   flex-grow: 1;
   justify-content: space-between;
-  margin-bottom: 0.7rem;
+  margin-bottom: var(--md-padding-x);
 }
 
 .desc{
@@ -53,7 +56,7 @@
   display: flex;
   flex-grow: 1;
   flex-basis: 0;
-  margin-right: 1rem;
+  margin-right: var(--md-padding-x);
 
   &:last-child {
     margin-right: 0;
@@ -116,45 +119,6 @@
 
 .spacedLeft {
   margin-left: 1rem;
-}
-
-.swatch {
-  @include elementFocus(var(--color-primary));
-
-  position: absolute;
-  float: right;
-  background: var(--color-white);
-  border-radius: var(--border-size);
-  border: var(--border-size) solid var(--color-gray-light);
-  display: inline-block;
-  cursor: pointer;
-}
-
-.swatchInner {
-  width: 3rem;
-  height: 1.1rem;
-  border-radius: var(--border-size);
-}
-
-.colorPickerOverlay {
-  position: fixed;
-  top: 0px;
-  right: 0px;
-  bottom: 0px;
-  left: 0px;
-}
-
-.colorPickerPopover {
-  position: absolute;
-  top: 2rem;
-  z-index: 1001;
-}
-
-.ccPreviewBox {
-  height: 100px;
-  padding: 5px;
-  border: 1px solid #f1f1f1;
-  overflow: auto;
 }
 
 .btnContainer {
