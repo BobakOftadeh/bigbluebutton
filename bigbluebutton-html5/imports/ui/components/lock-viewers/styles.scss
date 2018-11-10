@@ -22,7 +22,7 @@
 }
 .subHeader{
   color: var(--color-gray-label);
-  font-size: var(--font-size-small);
+  font-size: var(--font-size-base);
 }
 .modal {
     @extend .modal;
@@ -35,6 +35,7 @@
 
 .description{
     text-align: center;
+    color: var(--color-gray);
 }
 .row {
   display: flex;
