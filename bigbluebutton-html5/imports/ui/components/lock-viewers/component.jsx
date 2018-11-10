@@ -95,7 +95,7 @@ class LockViewersComponent extends Component {
             onClick={this.closeModal}
           />
         </div>
-        <div className={styles.model}>
+        <div className={styles.container}>
           <div className={styles.header}>
             <div className={styles.title}>{intl.formatMessage(intlMessages.lockViewersTitle)}</div>
           </div>
