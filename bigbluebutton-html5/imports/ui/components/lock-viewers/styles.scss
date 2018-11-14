@@ -5,12 +5,12 @@
 :root{
   --modal-margin: 3rem;
   --title-position-left: 2.2rem;
+  --closeBtn-position-left: 2.5rem;
 }
 
 .title {
   position: relative;
   left: var(--title-position-left);
-  text-align: center;
   color: var(--color-gray-dark);
   font-weight: bold;
   font-size: var(--font-size-large);
@@ -34,7 +34,7 @@
   justify-content: space-between;
   color: var(--color-gray-label);
   font-size: var(--font-size-base);
-  margin-bottom: var(--jumbo-padding-y) !important;
+  margin-bottom: var(--title-position-left);
 }
 
 .modal {
@@ -93,8 +93,8 @@
 
     position: relative;
     background-color: var(--color-white);
-    left: 2.5rem;
-    bottom: 3.025rem;
+    left: var(--closeBtn-position-left);
+    bottom: var(--closeBtn-position-left);
     i {
       color: var(--color-gray-light);
     }
@@ -112,6 +112,6 @@
   margin: 0;
   padding: 0;
   border: none;
-  line-height: 2rem;
-  margin-bottom: .6rem;
+  line-height: var(--title-position-left);
+  margin-bottom: var(--lg-padding-y);
   }
