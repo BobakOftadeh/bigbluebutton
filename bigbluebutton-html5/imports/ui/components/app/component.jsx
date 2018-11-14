@@ -338,7 +338,11 @@ class App extends Component {
     const meetingId = Auth.meetingID;
     const meeting = Meetings.findOne({ meetingId });
     const currentUser = Users.findOne({ userId: Auth.userID });
-    AudioManager.joinListenOnly();
+    const micsLocked = (currentUser.role === 'VIEWER' && meeting.lockSettingsProp.disableMic);
+    if (micsLocked) {
+      AudioManager.joinListenOnly();
+    }
+
     return (
       <main className={styles.main}>
         <NotificationsBarContainer />
@@ -357,7 +361,7 @@ class App extends Component {
         </section>
         <PollingContainer />
         <ModalContainer />
-        {currentUser.role === 'VIEWER' && meeting.lockSettingsProp.disableMic ? null : <AudioContainer />}
+        {micsLocked ? null : <AudioContainer />}
         <ToastContainer />
         <ChatAlertContainer />
         { customStyleUrl ? <link rel="stylesheet" type="text/css" href={customStyleUrl} /> : null }

@@ -8,11 +8,11 @@
 
 .title {
   color: var(--color-gray-dark);
-  font-weight: 400;
-  font-size: var(--lg-padding-x);
+  font-weight: bold;
+  font-size: var(--font-size-large);
   margin: 0;
   margin-bottom: var(--jumbo-padding-y);
-  text-align: center !important;
+  text-align: center;
 }
 
 .form {
@@ -27,6 +27,10 @@
 }
 
 .subHeader{
+  display: flex;
+  flex-flow: row;
+  flex-grow: 1;
+  justify-content: space-between;
   color: var(--color-gray-label);
   font-size: var(--font-size-base);
   margin-bottom: var(--jumbo-padding-y) !important;
@@ -44,6 +48,7 @@
 .description{
     text-align: center;
     color: var(--color-gray);
+    margin-bottom: var(--jumbo-padding-y)
 }
 .row {
   display: flex;
@@ -79,21 +84,12 @@
   flex-flow: row;
 }
 
-.title {
-  font-weight: bold;
-  text-align: center;
-}
-
 .bold{
     font-weight: bold;
 }
 
-.btnContainer {
-    display: flex;
-    justify-content: flex-end;
-}
-
 .closeBtn {
+
     position: relative;
     background-color: var(--color-white);
   
