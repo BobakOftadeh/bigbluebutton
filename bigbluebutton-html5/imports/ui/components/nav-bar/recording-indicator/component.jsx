@@ -1,8 +1,39 @@
 import React from 'react';
+import { defineMessages, injectIntl } from 'react-intl';
 import { styles } from './styles';
+import Button from '/imports/ui/components/button/component';
+import RecordingContainer from '/imports/ui/components/recording/container';
+import cx from 'classnames';
+
+const intlMessages = defineMessages({
+  startTitle: {
+    id: 'app.recording.startTitle',
+    description: 'start recording title',
+  },
+  stopTitle: {
+    id: 'app.recording.stopTitle',
+    description: 'stop recording title',
+  },
+  startDescription: {
+    id: 'app.recording.startDescription',
+    description: 'start recording description',
+  },
+  stopDescription: {
+    id: 'app.recording.stopDescription',
+    description: 'stop recording description',
+  },
+  yesLabel: {
+    id: 'app.audioModal.yes',
+    description: 'label for yes button',
+  },
+  noLabel: {
+    id: 'app.audioModal.no',
+    description: 'label for no button',
+  },
+});
 
 const RecordingIndicator = ({
-  record, title, recording,
+  record, title, recording, buttonTitle, mountModal,
 }) => {
   if (!record) return null;
 
@@ -11,7 +42,16 @@ const RecordingIndicator = ({
       aria-label={title}
       className={styles.recordState}
     >
-      <div className={recording ? styles.recordIndicator : styles.notRecording} />
+      <Button
+        label={buttonTitle}
+        hideLabel
+        ghost
+        className={recording ? styles.recordIndicator : styles.notRecording}
+        onClick={() => mountModal(<RecordingContainer />)}
+      />
+      <div className={cx(styles.presentationTitle, styles.dropdownBreakout)}>
+        {buttonTitle}
+      </div>
     </div>
   );
 };

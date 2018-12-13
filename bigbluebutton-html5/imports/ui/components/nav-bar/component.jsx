@@ -42,6 +42,10 @@ const intlMessages = defineMessages({
     id: 'app.navBar.recording.off',
     description: 'label for indicator when the session is not being recorded',
   },
+  startTitle: {
+    id: 'app.recording.startTitle',
+    description: 'start recording title',
+  },
 });
 
 const propTypes = {
@@ -178,6 +182,7 @@ class NavBar extends PureComponent {
       isExpanded,
       intl,
       shortcuts: TOGGLE_USERLIST_AK,
+      mountModal,
     } = this.props;
 
     const recordingMessage = beingRecorded.recording ? 'recordingIndicatorOn' : 'recordingIndicatorOff';
@@ -214,6 +219,8 @@ class NavBar extends PureComponent {
           <RecordingIndicator
             {...beingRecorded}
             title={intl.formatMessage(intlMessages[recordingMessage])}
+            buttonTitle={intl.formatMessage(intlMessages.startTitle)}
+            mountModal={mountModal}
           />
         </div>
         <div className={styles.right}>

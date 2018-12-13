@@ -28,10 +28,10 @@
 
 .notRecording {
   @extend %baseIndicator;
-  border: 1px solid var(--color-gray);
+  border: 1px solid var(--color-white);
 
   &:after {
-    background-color: var(--color-gray);
+    background-color: var(--color-white);
   }
 }
 
