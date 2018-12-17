@@ -42,14 +42,16 @@ const RecordingIndicator = ({
       aria-label={title}
       className={styles.recordState}
     >
-      <Button
-        label={buttonTitle}
-        hideLabel
-        ghost
-        className={recording ? styles.recordIndicator : styles.notRecording}
-        onClick={() => mountModal(<RecordingContainer />)}
-      />
-      <div className={cx(styles.presentationTitle, styles.dropdownBreakout)}>
+      <div className={styles.border}>
+        <Button
+          label={buttonTitle}
+          hideLabel
+          ghost
+          className={cx(styles.btn, recording ? styles.recordIndicator : styles.notRecording)}
+          onClick={() => mountModal(<RecordingContainer />)}
+        />
+      </div>
+      <div className={styles.presentationTitle}>
         {buttonTitle}
       </div>
     </div>
