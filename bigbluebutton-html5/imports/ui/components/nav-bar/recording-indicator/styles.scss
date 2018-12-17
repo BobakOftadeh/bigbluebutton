@@ -45,6 +45,9 @@
 }
 
 .presentationTitle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   font-weight: 200;
   color: var(--color-white);
   font-size: var(--font-size-base);
