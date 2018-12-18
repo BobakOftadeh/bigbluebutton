@@ -61,7 +61,7 @@ const defaultProps = {
   beingRecorded: false,
   shortcuts: '',
 };
-
+const interval = null;
 const openBreakoutJoinConfirmation = (breakout, breakoutName, mountModal) =>
   mountModal(<BreakoutJoinConfirmation
     breakout={breakout}
@@ -78,9 +78,15 @@ class NavBar extends PureComponent {
     this.state = {
       isActionsOpen: false,
       didSendBreakoutInvite: false,
+      time: 0,
     };
 
+    this.incrementTime = this.incrementTime.bind(this);
     this.handleToggleUserList = this.handleToggleUserList.bind(this);
+  }
+
+  componentDidMount() {
+    this.interval = setInterval(this.incrementTime, 1000);
   }
 
   componentDidUpdate(oldProps) {
@@ -88,7 +94,18 @@ class NavBar extends PureComponent {
       breakouts,
       isBreakoutRoom,
       mountModal,
+      beingRecorded,
     } = this.props;
+
+    if (!beingRecorded.recording) {
+      clearInterval(this.interval);
+      this.interval = null;
+      this.setState({ time: 0 });
+
+      console.log(beingRecorded);
+    } else if (this.interval === null) {
+      this.interval = setInterval(this.incrementTime, 1000);
+    }
 
     const hadBreakouts = oldProps.breakouts.length;
     const hasBreakouts = breakouts.length;
@@ -158,6 +175,11 @@ class NavBar extends PureComponent {
     );
   }
 
+  incrementTime() {
+    console.log(this.state.time);
+    this.setState({ time: this.state.time + 1 });
+  }
+
   renderBreakoutItem(breakout) {
     const {
       mountModal,
@@ -221,6 +243,7 @@ class NavBar extends PureComponent {
             title={intl.formatMessage(intlMessages[recordingMessage])}
             buttonTitle={intl.formatMessage(intlMessages.startTitle)}
             mountModal={mountModal}
+            time={this.state.time}
           />
         </div>
         <div className={styles.right}>

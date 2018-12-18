@@ -25,7 +25,7 @@ export default withTracker(() => {
 
   let meetingTitle;
   let meetingRecorded;
-
+  console.log(Auth);
   const meetingId = Auth.meetingID;
   const meetingObject = Meetings.findOne({
     meetingId,

@@ -2,7 +2,7 @@ import React from 'react';
 import { defineMessages, injectIntl } from 'react-intl';
 import Button from '/imports/ui/components/button/component';
 import RecordingContainer from '/imports/ui/components/recording/container';
-import humanizeSeconds from '/imports/utils/humanizeSeconds'
+import humanizeSeconds from '/imports/utils/humanizeSeconds';
 import { styles } from './styles';
 import cx from 'classnames';
 
@@ -34,10 +34,10 @@ const intlMessages = defineMessages({
 });
 
 const RecordingIndicator = ({
-  record, title, recording, buttonTitle, mountModal,
+  record, title, recording, buttonTitle, mountModal, time,
 }) => {
   if (!record) return null;
-  
+
   return (
     <div
       aria-label={title}
@@ -50,14 +50,12 @@ const RecordingIndicator = ({
           ghost
           className={cx(styles.btn, recording ? styles.recordIndicator : styles.notRecording)}
           onClick={() => {
-            mountModal(<RecordingContainer />)}}
+            mountModal(<RecordingContainer />);
+          }}
         />
       </div>
       <div className={styles.presentationTitle}>
-        {humanizeSeconds(setTimeout(function(){ 
-          let i = 0;
-          i += 1
-          return i}, 1000))}
+        {recording ? humanizeSeconds(time) : <div>{buttonTitle}</div>}
       </div>
     </div>
   );
