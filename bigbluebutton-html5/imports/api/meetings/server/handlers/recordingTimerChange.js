@@ -13,12 +13,11 @@ export default function handleRecordingStatusChange({ body }, meetingId) {
     $set: { 'recordProp.time': time },
   };
 
-  console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
-  console.log(body);
-
   const cb = (err) => {
     if (err) {
       Logger.error(`Changing recording time: ${err}`);
     }
   };
+
+  return Meetings.upsert(selector, modifier, cb);
 }

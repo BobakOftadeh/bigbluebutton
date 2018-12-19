@@ -86,7 +86,7 @@ class NavBar extends PureComponent {
   }
 
   componentDidMount() {
-    this.interval = setInterval(this.incrementTime, 1000);
+    
   }
 
   componentDidUpdate(oldProps) {
@@ -178,7 +178,18 @@ class NavBar extends PureComponent {
   }
 
   incrementTime() {
-    this.setState({ time: this.state.time + 1 });
+    const {
+      beingRecorded
+    } = this.props;
+
+
+    console.log(this.state.time)
+    console.log(beingRecorded)
+    if(beingRecorded.time > this.state.time){
+      this.setState({ time: beingRecorded.time + 1 });
+    }else{
+      this.setState({ time: this.state.time + 1 });
+    }
   }
 
   renderBreakoutItem(breakout) {
@@ -209,6 +220,18 @@ class NavBar extends PureComponent {
     } = this.props;
 
     const recordingMessage = beingRecorded.recording ? 'recordingIndicatorOn' : 'recordingIndicatorOff';
+    
+    
+    console.log(this.interval)
+    if(!this.interval){
+      console.log("AAAAADASDASDSAD")
+      this.interval = setInterval(this.incrementTime, 1000);
+    }
+  
+    if(beingRecorded.time !== this.state.time){
+      console.log("AAAAAAAAAABBBBBBBB")
+      
+    }
 
     const toggleBtnClasses = {};
     toggleBtnClasses[styles.btn] = true;
