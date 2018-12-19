@@ -78,7 +78,7 @@ class NavBar extends PureComponent {
     this.state = {
       isActionsOpen: false,
       didSendBreakoutInvite: false,
-      time: 0,
+      time: props.beingRecorded.time,
     };
 
     this.incrementTime = this.incrementTime.bind(this);
@@ -100,8 +100,6 @@ class NavBar extends PureComponent {
     if (!beingRecorded.recording) {
       clearInterval(this.interval);
       this.interval = null;
-      this.setState({ time: 0 });
-
       console.log(beingRecorded);
     } else if (this.interval === null) {
       this.interval = setInterval(this.incrementTime, 1000);
@@ -127,6 +125,10 @@ class NavBar extends PureComponent {
     if (!breakouts.length && this.state.didSendBreakoutInvite) {
       this.setState({ didSendBreakoutInvite: false });
     }
+  }
+
+  componentWillUnmount() {
+    clearInterval(interval);
   }
 
   handleToggleUserList() {
@@ -176,7 +178,6 @@ class NavBar extends PureComponent {
   }
 
   incrementTime() {
-    console.log(this.state.time);
     this.setState({ time: this.state.time + 1 });
   }
 

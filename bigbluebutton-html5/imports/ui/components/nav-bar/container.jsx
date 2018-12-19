@@ -31,6 +31,8 @@ export default withTracker(() => {
     meetingId,
   });
 
+  console.log(meetingObject)
+
   if (meetingObject != null) {
     meetingTitle = meetingObject.meetingProp.name;
     meetingRecorded = meetingObject.recordProp;
