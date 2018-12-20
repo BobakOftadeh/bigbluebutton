@@ -46,6 +46,10 @@ const intlMessages = defineMessages({
     id: 'app.recording.startTitle',
     description: 'start recording title',
   },
+  stopTitle: {
+    id: 'app.recording.stopTitle',
+    description: 'stop recording title',
+  },
 });
 
 const propTypes = {
@@ -78,15 +82,11 @@ class NavBar extends PureComponent {
     this.state = {
       isActionsOpen: false,
       didSendBreakoutInvite: false,
-      time: props.beingRecorded.time,
+      time: (props.beingRecorded.time ? props.beingRecorded.time : 0),
     };
 
     this.incrementTime = this.incrementTime.bind(this);
     this.handleToggleUserList = this.handleToggleUserList.bind(this);
-  }
-
-  componentDidMount() {
-    
   }
 
   componentDidUpdate(oldProps) {
@@ -265,7 +265,7 @@ class NavBar extends PureComponent {
           <RecordingIndicator
             {...beingRecorded}
             title={intl.formatMessage(intlMessages[recordingMessage])}
-            buttonTitle={intl.formatMessage(intlMessages.startTitle)}
+            buttonTitle={(!beingRecorded.recording ? intl.formatMessage(intlMessages.startTitle) : intl.formatMessage(intlMessages.stopTitle))}
             mountModal={mountModal}
             time={this.state.time}
           />

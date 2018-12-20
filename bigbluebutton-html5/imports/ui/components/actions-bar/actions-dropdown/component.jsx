@@ -141,17 +141,6 @@ class ActionsDropdown extends Component {
           onClick={this.handlePresentationClick}
         />
         : null),
-      (record && isUserModerator && allowStartStopRecording ?
-        <DropdownListItem
-          icon="record"
-          label={intl.formatMessage(isRecording ?
-            intlMessages.stopRecording : intlMessages.startRecording)}
-          description={intl.formatMessage(isRecording ?
-            intlMessages.stopRecording : intlMessages.startRecording)}
-          key={this.recordId}
-          onClick={() => mountModal(<RecordingContainer />)}
-        />
-        : null),
       (isUserModerator && !meetingIsBreakout && !hasBreakoutRoom ?
         <DropdownListItem
           icon="rooms"

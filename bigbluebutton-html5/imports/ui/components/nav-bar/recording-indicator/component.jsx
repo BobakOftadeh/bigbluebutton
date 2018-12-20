@@ -6,33 +6,6 @@ import humanizeSeconds from '/imports/utils/humanizeSeconds';
 import { styles } from './styles';
 import cx from 'classnames';
 
-const intlMessages = defineMessages({
-  startTitle: {
-    id: 'app.recording.startTitle',
-    description: 'start recording title',
-  },
-  stopTitle: {
-    id: 'app.recording.stopTitle',
-    description: 'stop recording title',
-  },
-  startDescription: {
-    id: 'app.recording.startDescription',
-    description: 'start recording description',
-  },
-  stopDescription: {
-    id: 'app.recording.stopDescription',
-    description: 'stop recording description',
-  },
-  yesLabel: {
-    id: 'app.audioModal.yes',
-    description: 'label for yes button',
-  },
-  noLabel: {
-    id: 'app.audioModal.no',
-    description: 'label for no button',
-  },
-});
-
 const RecordingIndicator = ({
   record, title, recording, buttonTitle, mountModal, time,
 }) => {
