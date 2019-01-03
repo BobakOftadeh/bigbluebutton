@@ -30,8 +30,6 @@ export default withTracker(() => {
     meetingId,
   });
 
-  console.log(meetingObject)
-
   if (meetingObject != null) {
     meetingTitle = meetingObject.meetingProp.name;
     meetingRecorded = meetingObject.recordProp;
@@ -51,6 +49,18 @@ export default withTracker(() => {
       .concat(PUBLIC_GROUP_CHAT_ID)
       .some(receiverID => ChatService.hasUnreadMessages(receiverID));
   };
+
+  Meetings.find({ meetingId: Auth.meetingID }).observeChanges({
+    changed: (id, fields) => {
+      if (fields.recordProp && fields.recordProp.recording) {
+        this.window.parent.postMessage({ response: 'recordingStarted' }, '*');
+      }
+
+      if (fields.recordProp && !fields.recordProp.recording) {
+        this.window.parent.postMessage({ response: 'recordingStopped' }, '*');
+      }
+    },
+  });
 
   const breakouts = Service.getBreakouts();
   const currentUserId = Auth.userID;

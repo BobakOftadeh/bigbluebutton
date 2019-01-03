@@ -11,11 +11,13 @@ import DropdownList from '/imports/ui/components/dropdown/list/component';
 import DropdownListItem from '/imports/ui/components/dropdown/list/item/component';
 import { withModalMounter } from '/imports/ui/components/modal/service';
 import withShortcutHelper from '/imports/ui/components/shortcut-help/service';
+import getFromUserSettings from '/imports/ui/services/users-settings';
 import { defineMessages, injectIntl } from 'react-intl';
 import { styles } from './styles.scss';
 import Button from '../button/component';
 import RecordingIndicator from './recording-indicator/component';
 import SettingsDropdownContainer from './settings-dropdown/container';
+import ActionBarService from './service';
 
 const intlMessages = defineMessages({
   toggleUserListLabel: {
@@ -55,14 +57,14 @@ const intlMessages = defineMessages({
 const propTypes = {
   presentationTitle: PropTypes.string,
   hasUnreadMessages: PropTypes.bool,
-  beingRecorded: PropTypes.object,
+  beingRecorded: PropTypes.objectOf(PropTypes.any),
   shortcuts: PropTypes.string,
 };
 
 const defaultProps = {
   presentationTitle: 'Default Room Title',
   hasUnreadMessages: false,
-  beingRecorded: false,
+  beingRecorded: null,
   shortcuts: '',
 };
 const interval = null;
@@ -89,6 +91,14 @@ class NavBar extends PureComponent {
     this.handleToggleUserList = this.handleToggleUserList.bind(this);
   }
 
+  componentDidMount() {
+    if (Meteor.settings.public.allowOutsideCommands.toggleRecording ||
+      getFromUserSettings('outsideToggleRecording', false)) {
+      ActionBarService.connectRecordingObserver();
+      window.addEventListener('message', ActionBarService.processOutsideToggleRecording);
+    }
+  }
+
   componentDidUpdate(oldProps) {
     const {
       breakouts,
@@ -100,7 +110,6 @@ class NavBar extends PureComponent {
     if (!beingRecorded.recording) {
       clearInterval(this.interval);
       this.interval = null;
-      console.log(beingRecorded);
     } else if (this.interval === null) {
       this.interval = setInterval(this.incrementTime, 1000);
     }
@@ -145,6 +154,16 @@ class NavBar extends PureComponent {
     });
   }
 
+  incrementTime() {
+    const { beingRecorded } = this.props;
+
+    if (beingRecorded.time > this.state.time) {
+      this.setState({ time: beingRecorded.time + 1 });
+    } else {
+      this.setState({ time: this.state.time + 1 });
+    }
+  }
+
   renderPresentationTitle() {
     const {
       breakouts,
@@ -177,21 +196,6 @@ class NavBar extends PureComponent {
     );
   }
 
-  incrementTime() {
-    const {
-      beingRecorded
-    } = this.props;
-
-
-    console.log(this.state.time)
-    console.log(beingRecorded)
-    if(beingRecorded.time > this.state.time){
-      this.setState({ time: beingRecorded.time + 1 });
-    }else{
-      this.setState({ time: this.state.time + 1 });
-    }
-  }
-
   renderBreakoutItem(breakout) {
     const {
       mountModal,
@@ -220,17 +224,9 @@ class NavBar extends PureComponent {
     } = this.props;
 
     const recordingMessage = beingRecorded.recording ? 'recordingIndicatorOn' : 'recordingIndicatorOff';
-    
-    
-    console.log(this.interval)
-    if(!this.interval){
-      console.log("AAAAADASDASDSAD")
+
+    if (!this.interval) {
       this.interval = setInterval(this.incrementTime, 1000);
-    }
-  
-    if(beingRecorded.time !== this.state.time){
-      console.log("AAAAAAAAAABBBBBBBB")
-      
     }
 
     const toggleBtnClasses = {};
@@ -265,7 +261,8 @@ class NavBar extends PureComponent {
           <RecordingIndicator
             {...beingRecorded}
             title={intl.formatMessage(intlMessages[recordingMessage])}
-            buttonTitle={(!beingRecorded.recording ? intl.formatMessage(intlMessages.startTitle) : intl.formatMessage(intlMessages.stopTitle))}
+            buttonTitle={(!beingRecorded.recording ? intl.formatMessage(intlMessages.startTitle) :
+               intl.formatMessage(intlMessages.stopTitle))}
             mountModal={mountModal}
             time={this.state.time}
           />
