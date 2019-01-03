@@ -31,7 +31,7 @@ const intlMessages = defineMessages({
   },
 });
 
-class RecordingComponent extends Component {
+class RecordingComponent extends React.PureComponent {
   constructor(props) {
     super(props);
     const {
@@ -45,7 +45,7 @@ class RecordingComponent extends Component {
 
   render() {
     const { intl, meeting } = this.props;
-
+    const recording = meeting.recordProp.recording;
     return (
       <Modal
         overlayClassName={styles.overlay}
@@ -55,12 +55,12 @@ class RecordingComponent extends Component {
       >
         <div className={styles.container}>
           <div className={styles.header}>
-            <div className={styles.title}>{intl.formatMessage(!meeting.recordProp.recording ?
+            <div className={styles.title}>{intl.formatMessage(!recording?
             intlMessages.startTitle : intlMessages.stopTitle)}
             </div>
           </div>
           <div className={styles.description}>
-            {`${intl.formatMessage(!meeting.recordProp.recording ? intlMessages.startDescription :
+            {`${intl.formatMessage(!recording ? intlMessages.startDescription :
             intlMessages.stopDescription)}`}
           </div>
           <div className={styles.footer}>
