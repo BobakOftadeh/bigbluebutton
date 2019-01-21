@@ -32,33 +32,18 @@ const propTypes = {
 };
 
 class EndMeetingComponent extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    const {
-      closeModal,
-      endMeeting,
-    } = props;
-
-    this.closeModal = closeModal;
-    this.endMeeting = endMeeting;
-  }
-
   render() {
-    const { intl } = this.props;
+    const { intl, closeModal, endMeeting } = this.props;
 
     return (
       <Modal
         overlayClassName={styles.overlay}
         className={styles.modal}
-        onRequestClose={this.closeModal}
+        onRequestClose={closeModal}
         hideBorder
+        title={intl.formatMessage(intlMessages.endMeetingTitle)}
       >
         <div className={styles.container}>
-          <div className={styles.header}>
-            <div className={styles.title}>
-              {intl.formatMessage(intlMessages.endMeetingTitle)}
-            </div>
-          </div>
           <div className={styles.description}>
             {intl.formatMessage(intlMessages.endMeetingDescription)}
           </div>
@@ -67,12 +52,12 @@ class EndMeetingComponent extends React.PureComponent {
               color="primary"
               className={styles.button}
               label={intl.formatMessage(intlMessages.yesLabel)}
-              onClick={() => this.endMeeting()}
+              onClick={endMeeting}
             />
             <Button
               label={intl.formatMessage(intlMessages.noLabel)}
               className={styles.button}
-              onClick={() => this.closeModal()}
+              onClick={closeModal}
             />
           </div>
         </div>
