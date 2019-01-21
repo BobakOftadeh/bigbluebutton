@@ -55,6 +55,7 @@ const intlMessages = defineMessages({
   },
 });
 
+
 const propTypes = {
   presentationTitle: PropTypes.string,
   hasUnreadMessages: PropTypes.bool,
