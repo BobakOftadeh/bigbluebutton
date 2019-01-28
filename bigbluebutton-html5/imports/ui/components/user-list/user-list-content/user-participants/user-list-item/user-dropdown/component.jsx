@@ -194,6 +194,8 @@ class UserDropdown extends PureComponent {
       removeUser,
       toggleVoice,
       changeRole,
+      lockSettingsProp,
+      hasPrivateChatBetweenUsers,
     } = this.props;
 
     const { showNestedOptions } = this.state;
@@ -212,6 +214,13 @@ class UserDropdown extends PureComponent {
       allowedToDemote,
       allowedToChangeStatus,
     } = actionPermissions;
+
+    const { disablePrivChat } = lockSettingsProp;
+
+    const enablePrivateChat = currentUser.isModerator
+      ? allowedToChatPrivately
+      : allowedToChatPrivately
+      && (!disablePrivChat || (disablePrivChat && hasPrivateChatBetweenUsers(currentUser, user)));
 
     if (showNestedOptions) {
       if (allowedToChangeStatus) {
@@ -246,9 +255,9 @@ class UserDropdown extends PureComponent {
       ));
     }
 
-    if (allowedToChatPrivately) {
+    if (enablePrivateChat) {
       actions.push(this.makeDropdownItem(
-        'openChat',
+        'activeChat',
         intl.formatMessage(messages.ChatLabel),
         () => {
           getGroupChatPrivate(currentUser, user);
@@ -448,6 +457,7 @@ class UserDropdown extends PureComponent {
       dropdownVisible,
       dropdownDirection,
       dropdownOffset,
+      showNestedOptions,
     } = this.state;
 
     const actions = this.getUsersActions();
@@ -509,7 +519,7 @@ class UserDropdown extends PureComponent {
     return (
       <Dropdown
         ref={(ref) => { this.dropdown = ref; }}
-        isOpen={isActionsOpen}
+        keepOpen={isActionsOpen || showNestedOptions}
         onShow={this.onActionsShow}
         onHide={this.onActionsHide}
         className={userItemContentsStyle}
