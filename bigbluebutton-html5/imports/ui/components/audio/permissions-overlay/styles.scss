@@ -24,12 +24,12 @@
     bottom: 10%;
   }
   :global(.browser-firefox) & {
-    top: 125px;
-    left: 605px;
+    top: 8em;
+    left: 22em;
   }
   :global(.browser-chrome) & {
-    top: 100px;
-    left: 380px;
+    top: 6em;
+    left: 19em;
   }
   :global(.browser-safari) & {
     top: 100px;
